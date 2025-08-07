@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}Upload CSV - Credit Card Fraud Detection{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Header Section -->
+        <div class="text-center mb-5 fade-in-up">
+            <div class="mb-4">
+                <i class="fas fa-shield-alt fa-4x text-gradient glow-effect"></i>
+            </div>
+            <h1 class="display-4 gradient-text mb-3">
+                Credit Card Fraud Detection
+            </h1>
+            <p class="lead">
+                Advanced AI-powered fraud detection using machine learning algorithms
+            </p>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <span class="badge bg-primary me-2">
+                    <i class="fas fa-brain me-1"></i>
+                    AI Powered
+                </span>
+                <span class="badge bg-success me-2">
+                    <i class="fas fa-lock me-1"></i>
+                    Secure
+                </span>
+                <span class="badge bg-info">
+                    <i class="fas fa-bolt me-1"></i>
+                    Real-time
+                </span>
+            </div>
+        </div>
+
+        <!-- Upload Form Card -->
+        <div class="card shadow-cyber slide-in-left">
+            <div class="card-header">
+                <h4 class="card-title mb-0 gradient-text">
+                    <i class="fas fa-cloud-upload-alt me-2"></i>
+                    Upload Transaction Data
+                </h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                    <div class="upload-zone mb-4" id="uploadZone">
+                        <div class="mb-3">
+                            <i class="fas fa-file-csv fa-3x text-gradient mb-3"></i>
+                        </div>
+                        <label for="file" class="form-label fw-bold">
+                            <span class="text-cyber">Select CSV File</span>
+                        </label>
+                        <input type="file"
+                               class="form-control form-control-lg"
+                               id="file"
+                               name="file"
+                               accept=".csv"
+                               required
+                               style="display: none;">
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-outline-primary" onclick="document.getElementById('file').click()">
+                                <i class="fas fa-folder-open me-2"></i>
+                                Choose File
+                            </button>
+                        </div>
+                        <div class="form-text mt-3">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Drag & drop or click to select • Max 16MB • CSV format only
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg pulse-animation" id="submitBtn">
+                            <i class="fas fa-brain me-2"></i>
+                            <span class="text-cyber">Analyze for Fraud</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Requirements Section -->
+        <div class="card mt-4 cyber-border fade-in-up" style="animation-delay: 0.2s;">
+            <div class="card-header">
+                <h5 class="card-title mb-0 gradient-text">
+                    <i class="fas fa-cogs me-2"></i>
+                    Data Requirements
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-primary">Required Columns:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i><code>Time</code> - Transaction time</li>
+                            <li><i class="fas fa-check text-success me-2"></i><code>Amount</code> - Transaction amount</li>
+                            <li><i class="fas fa-check text-success me-2"></i><code>V1</code> to <code>V28</code> - PCA features</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-primary">Data Format:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>All values must be numeric</li>
+                            <li><i class="fas fa-check text-success me-2"></i>No missing values allowed</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Standard CSV format with headers</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3" role="alert">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <strong>Pro Tip:</strong> This system uses advanced ML algorithms trained on
+                    PCA-transformed features (V1-V28) for optimal fraud detection accuracy.
+                </div>
+            </div>
+        </div>
+
+        <!-- How it Works Section -->
+        <div class="card mt-4 glass-effect fade-in-up" style="animation-delay: 0.4s;">
+            <div class="card-header">
+                <h5 class="card-title mb-0 gradient-text">
+                    <i class="fas fa-rocket me-2"></i>
+                    How It Works
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-cloud-upload-alt fa-4x text-gradient"></i>
+                        </div>
+                        <h6 class="text-cyber">01. Upload Data</h6>
+                        <p class="small">
+                            Securely upload your CSV file with transaction data
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-brain fa-4x text-gradient"></i>
+                        </div>
+                        <h6 class="text-cyber">02. AI Analysis</h6>
+                        <p class="small">
+                            Advanced RandomForest + SMOTETomek algorithms detect patterns
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-chart-pie fa-4x text-gradient"></i>
+                        </div>
+                        <h6 class="text-cyber">03. Get Results</h6>
+                        <p class="small">
+                            Instant fraud detection with detailed analytics and insights
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="row mt-4 pt-4 border-top border-secondary">
+                    <div class="col-md-3 text-center">
+                        <div class="text-gradient h4 mb-1">99.95%</div>
+                        <small class="text-cyber">Accuracy</small>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="text-gradient h4 mb-1">89.31%</div>
+                        <small class="text-cyber">Precision</small>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="text-gradient h4 mb-1">79.05%</div>
+                        <small class="text-cyber">Recall</small>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="text-gradient h4 mb-1">&lt;1s</div>
+                        <small class="text-cyber">Response Time</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-4">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h5>Analyzing Transactions...</h5>
+                <p class="text-muted">Please wait while we process your data for fraud detection.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    const fileInput = document.getElementById('file');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (fileInput.files.length === 0) {
+        e.preventDefault();
+        alert('Please select a CSV file to upload.');
+        return;
+    }
+    
+    // Check file size (16MB = 16 * 1024 * 1024 bytes)
+    const maxSize = 16 * 1024 * 1024;
+    if (fileInput.files[0].size > maxSize) {
+        e.preventDefault();
+        alert('File size exceeds 16MB limit. Please choose a smaller file.');
+        return;
+    }
+    
+    // Check file extension
+    const fileName = fileInput.files[0].name;
+    const fileExtension = fileName.split('.').pop().toLowerCase();
+    if (fileExtension !== 'csv') {
+        e.preventDefault();
+        alert('Please select a CSV file.');
+        return;
+    }
+    
+    // Show loading modal
+    const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+    loadingModal.show();
+    
+    // Disable submit button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+});
+
+// File input change handler
+document.getElementById('file').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const fileSize = (file.size / 1024 / 1024).toFixed(2);
+        console.log(`Selected file: ${file.name} (${fileSize} MB)`);
+    }
+});
+</script>
+{% endblock %}
